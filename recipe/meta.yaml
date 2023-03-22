@@ -10,8 +10,8 @@ source:
   sha256: ee42f2f8c1d4bcfe35f746e472f07633570d485fab45407effc0379270a3bb03
 
 build:
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
+  skip: true  # [py<38]
+  script: {{ PYTHON }} -m pip install . -vv --no-deps
   number: 0
 
 requirements:

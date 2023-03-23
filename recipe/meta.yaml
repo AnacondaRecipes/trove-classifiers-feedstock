@@ -10,17 +10,19 @@ source:
   sha256: ee42f2f8c1d4bcfe35f746e472f07633570d485fab45407effc0379270a3bb03
 
 build:
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
+  skip: true  # [py<38]
+  script: {{ PYTHON }} -m pip install . -vv --no-deps
   number: 0
 
 requirements:
   host:
-    - python >=3.6
-    - calver
+    - python
+    - calver 2022.6.26
     - pip
+    - setuptools
+    - wheel
   run:
-    - python >=3.6
+    - python
 
 test:
   imports:
@@ -33,9 +35,15 @@ test:
 about:
   home: https://github.com/pypa/trove-classifiers
   summary: Canonical source for classifiers on PyPI (pypi.org).
+  description: | 
+    Canonical source for classifiers on PyPI. 
+    Classifiers categorize projects per PEP 301. 
+    Use this package to validate classifiers in packages for PyPI upload or download.
   license: Apache-2.0
   license_family: Apache
   license_file: LICENSE
+  dev_url: https://github.com/pypa/trove-classifiers
+  doc_url: https://pypi.org/project/trove-classifiers/
 
 extra:
   recipe-maintainers:

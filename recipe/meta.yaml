@@ -17,7 +17,7 @@ build:
 requirements:
   host:
     - python
-    - calver
+    - calver 2022.6.26
     - pip
     - setuptools
     - wheel

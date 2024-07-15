@@ -1,28 +1,27 @@
 {% set name = "trove-classifiers" %}
-{% set version = "2023.10.18" %}
+{% set version = "2024.5.22" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/trove-classifiers-{{ version }}.tar.gz
-  sha256: 2cdfcc7f31f7ffdd57666a9957296089ac72daad4d11ab5005060e5cd7e29939
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
+  sha256: 8a6242bbb5c9ae88d34cf665e816b287d2212973c8777dfaef5ec18d72ac1d03
 
 build:
-  skip: true  # [py<38]
-  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  noarch: python
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   number: 0
 
 requirements:
   host:
-    - python
-    - calver 2022.6.26
+    - python >=3.7
+    - calver
     - pip
     - setuptools
-    - wheel
   run:
-    - python
+    - python >=3.7
 
 test:
   imports:
@@ -35,16 +34,14 @@ test:
 about:
   home: https://github.com/pypa/trove-classifiers
   summary: Canonical source for classifiers on PyPI (pypi.org).
-  description: |
-    Canonical source for classifiers on PyPI.
-    Classifiers categorize projects per PEP 301.
-    Use this package to validate classifiers in packages for PyPI upload or download.
   license: Apache-2.0
   license_family: Apache
   license_file: LICENSE
-  dev_url: https://github.com/pypa/trove-classifiers
-  doc_url: https://pypi.org/project/trove-classifiers/
 
 extra:
+  anaconda-services:
+    reason: Dependency for apache-airflow
+    recipe-maintainers:
+      - ianaobi
   recipe-maintainers:
     - xylar

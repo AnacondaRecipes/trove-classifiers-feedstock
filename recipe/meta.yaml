@@ -26,6 +26,18 @@ requirements:
   run:
     - python
 
+{% set tests_to_skip = "" %}
+# hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+#                          # no special security
+#                          None, None,
+#                          int(not close_fds),
+#                          creationflags,
+#                          env,
+#                          cwd,
+#                          startupinfo)
+#                          FileNotFoundError: [WinError 2] The system cannot find the file specified
+{% set tests_to_skip = tests_to_skip + '-k "not (test_entry_point or test_module_run_is_entry_point)"' %}  # [win]
+
 test:
   source_files:
     - tests
@@ -34,7 +46,7 @@ test:
   commands:
     - pip check
     - trove-classifiers --help
-    - pytest tests
+    - pytest {{ tests_to_skip }} tests
   requires:
     - pip
     - pytest

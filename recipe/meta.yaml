@@ -34,7 +34,7 @@ test:
   commands:
     - pip check
     - trove-classifiers --help
-    - pytest -v tests
+    - pytest tests
   requires:
     - pip
     - pytest

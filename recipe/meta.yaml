@@ -1,5 +1,5 @@
 {% set name = "trove-classifiers" %}
-{% set version = "2024.10.14" %}
+{% set version = "2025.5.9.12" %}
 
 package:
   name: {{ name|lower }}
@@ -7,30 +7,49 @@ package:
 
 source:
   url: https://github.com/pypa/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
-  sha256: e57a5cfa85a5995234b887069fc040fe7f7a628b8f4322f51d60b640162d5ea9
+  sha256: e2073313aeed13ca9c305ad6cacc2bed0c42a1170ef843f67e1e27c3d98c39c1
 
 build:
   skip: true  # [py<38]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   number: 0
+  entry_points:
+    - trove-classifiers = trove_classifiers.__main__:cli
 
 requirements:
   host:
     - python
-    - calver 2022.6.26
+    - calver
     - pip
     - setuptools
     - wheel
   run:
     - python
 
+{% set tests_to_skip = "" %}
+# hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+#                          # no special security
+#                          None, None,
+#                          int(not close_fds),
+#                          creationflags,
+#                          env,
+#                          cwd,
+#                          startupinfo)
+#                          FileNotFoundError: [WinError 2] The system cannot find the file specified
+{% set tests_to_skip = tests_to_skip + '-k "not (test_entry_point or test_module_run_is_entry_point)"' %}  # [win]
+
 test:
+  source_files:
+    - tests
   imports:
     - trove_classifiers
   commands:
     - pip check
+    - trove-classifiers --help
+    - pytest {{ tests_to_skip }} tests
   requires:
     - pip
+    - pytest
 
 about:
   home: https://github.com/pypa/trove-classifiers
@@ -43,7 +62,7 @@ about:
   license_family: Apache
   license_file: LICENSE
   dev_url: https://github.com/pypa/trove-classifiers
-  doc_url: https://pypi.org/project/trove-classifiers/
+  doc_url: https://pypi.org/project/trove-classifiers
 
 extra:
   recipe-maintainers:

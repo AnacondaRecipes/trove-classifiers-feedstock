@@ -1,5 +1,5 @@
 {% set name = "trove-classifiers" %}
-{% set version = "2025.5.9.12" %}
+{% set version = "2026.1.14.14" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/pypa/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
-  sha256: e2073313aeed13ca9c305ad6cacc2bed0c42a1170ef843f67e1e27c3d98c39c1
+  sha256: aad9b7b24472eda66c29566d546804ac5eaf625ceed359a16fd25e3351766102
 
 build:
   skip: true  # [py<38]
@@ -36,7 +36,7 @@ requirements:
 #                          cwd,
 #                          startupinfo)
 #                          FileNotFoundError: [WinError 2] The system cannot find the file specified
-{% set tests_to_skip = tests_to_skip + '-k "not (test_entry_point or test_module_run_is_entry_point)"' %}  # [win]
+# {% set tests_to_skip = tests_to_skip + '-k "not (test_entry_point or test_module_run_is_entry_point)"' %}  # [win]
 
 test:
   source_files:

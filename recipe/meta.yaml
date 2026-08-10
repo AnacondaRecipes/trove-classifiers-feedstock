@@ -19,7 +19,7 @@ build:
 requirements:
   host:
     - python
-    - calver
+    - calver ==2025.10.20
     - pip
     - setuptools
     - wheel

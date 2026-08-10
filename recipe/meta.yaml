@@ -1,13 +1,13 @@
 {% set name = "trove-classifiers" %}
-{% set version = "2026.1.14.14" %}
+{% set version = "2026.6.1.19" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://github.com/pypa/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
-  sha256: aad9b7b24472eda66c29566d546804ac5eaf625ceed359a16fd25e3351766102
+  sha256: 20360c44ddae1f970eab52c26523de6e2e79bbe7c493fa363c681ee5fa47a588
 
 build:
   skip: true  # [py<38]
@@ -19,7 +19,7 @@ build:
 requirements:
   host:
     - python
-    - calver 2025
+    - calver ==2025.10.20
     - pip
     - setuptools
     - wheel
@@ -46,7 +46,7 @@ test:
   commands:
     - pip check
     - trove-classifiers --help
-    - pytest {{ tests_to_skip }} tests
+    - pytest -vv {{ tests_to_skip }} tests
   requires:
     - pip
     - pytest
